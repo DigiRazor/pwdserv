@@ -1,0 +1,17 @@
+{
+    "PasswordRules":{
+        "CheckConfirm": true,
+        "CheckMinLength": true,
+        "MinLength": 7,
+        "CheckUserID": true,
+        "CheckUppercase": true,
+        "CheckLowercase": true,
+        "CheckNumeric": true,
+        "CheckSpecialChar": true,
+        "SpecialChar": "!@#$%*/+",
+        "CheckWhiteSpace": true,        
+        "CheckHistory": true,
+        "MinHistory": 12,
+        "CheckBlackList": true
+   }
+}
