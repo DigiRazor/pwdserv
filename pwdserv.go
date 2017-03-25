@@ -7,13 +7,12 @@ import (
 
 // Validation is a function that can be registered to validate
 // passwords.
-type Validation func(*Password, *PasswordRules, []string) (bool, error)
+type Validation func(*Password, *PasswordRules) (bool, error)
 
 // PasswordService service to validate user passwords
 type PasswordService struct {
-	vl        map[string]*validFunc
-	config    *PasswordRules
-	blackList []string
+	vl     map[string]*validFunc
+	config *PasswordRules
 }
 
 // New creates a new PasswordService
@@ -41,8 +40,9 @@ func (z *PasswordService) SetConfig(configData []byte, blackList []string) error
 		return err
 	}
 
+	cfg.BlackList = blackList
+
 	z.config = cfg
-	z.blackList = blackList
 
 	return nil
 }
@@ -56,7 +56,7 @@ func (z *PasswordService) Validate(model *Password) error {
 
 	for _, value := range z.vl {
 		validation := value.validation
-		isvalid, err := validation(model, z.config, z.blackList)
+		isvalid, err := validation(model, z.config)
 		if isvalid == false {
 			return err
 		}

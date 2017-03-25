@@ -19,7 +19,7 @@ func (n *validFunc) addFunc(name string, val Validation) {
 }
 
 // ComfirmPassword function
-func ComfirmPassword(password *Password, config *PasswordRules, blackList []string) (bool, error) {
+func ComfirmPassword(password *Password, config *PasswordRules) (bool, error) {
 	if config.CheckConfirm == true {
 		res := strings.TrimSpace(password.NewPassword) == strings.TrimSpace(password.ConfirmPassword)
 		if res == false {
@@ -31,7 +31,7 @@ func ComfirmPassword(password *Password, config *PasswordRules, blackList []stri
 }
 
 // CheckLength function
-func CheckLength(password *Password, config *PasswordRules, blackList []string) (bool, error) {
+func CheckLength(password *Password, config *PasswordRules) (bool, error) {
 	if config.CheckMinLength == true {
 		res := len(strings.TrimSpace(password.NewPassword)) >= config.MinLength
 
@@ -45,7 +45,7 @@ func CheckLength(password *Password, config *PasswordRules, blackList []string) 
 }
 
 // CheckUserID function
-func CheckUserID(password *Password, config *PasswordRules, blackList []string) (bool, error) {
+func CheckUserID(password *Password, config *PasswordRules) (bool, error) {
 	if config.CheckUserID == true {
 		lowerUID := strings.ToLower(password.UserID)
 		lowerPass := strings.ToLower(password.NewPassword)
@@ -61,7 +61,7 @@ func CheckUserID(password *Password, config *PasswordRules, blackList []string) 
 }
 
 // CheckUppercase function
-func CheckUppercase(password *Password, config *PasswordRules, blackList []string) (bool, error) {
+func CheckUppercase(password *Password, config *PasswordRules) (bool, error) {
 	if config.CheckUppercase == true {
 		res, _ := regexp.MatchString("(.*[A-Z])", password.NewPassword)
 
@@ -74,7 +74,7 @@ func CheckUppercase(password *Password, config *PasswordRules, blackList []strin
 }
 
 // CheckLowercase function
-func CheckLowercase(password *Password, config *PasswordRules, blackList []string) (bool, error) {
+func CheckLowercase(password *Password, config *PasswordRules) (bool, error) {
 	if config.CheckLowercase == true {
 		res, _ := regexp.MatchString("(.*[a-z])", password.NewPassword)
 
@@ -87,7 +87,7 @@ func CheckLowercase(password *Password, config *PasswordRules, blackList []strin
 }
 
 // CheckNumeric function
-func CheckNumeric(password *Password, config *PasswordRules, blackList []string) (bool, error) {
+func CheckNumeric(password *Password, config *PasswordRules) (bool, error) {
 	if config.CheckNumeric == true {
 		res, _ := regexp.MatchString("(.*[0-9])", password.NewPassword)
 
@@ -100,7 +100,7 @@ func CheckNumeric(password *Password, config *PasswordRules, blackList []string)
 }
 
 // CheckSpecialChar function
-func CheckSpecialChar(password *Password, config *PasswordRules, blackList []string) (bool, error) {
+func CheckSpecialChar(password *Password, config *PasswordRules) (bool, error) {
 	if config.CheckSpecialChar == true {
 		str := config.SpecialChar
 		for _, r := range str {
@@ -118,7 +118,7 @@ func CheckSpecialChar(password *Password, config *PasswordRules, blackList []str
 }
 
 // CheckWhiteSpace function
-func CheckWhiteSpace(password *Password, config *PasswordRules, blackList []string) (bool, error) {
+func CheckWhiteSpace(password *Password, config *PasswordRules) (bool, error) {
 	if config.CheckWhiteSpace == true {
 		res, _ := regexp.MatchString("(.*[\\s])", password.NewPassword)
 
@@ -131,7 +131,7 @@ func CheckWhiteSpace(password *Password, config *PasswordRules, blackList []stri
 }
 
 // CheckHistory function
-func CheckHistory(password *Password, config *PasswordRules, blackList []string) (bool, error) {
+func CheckHistory(password *Password, config *PasswordRules) (bool, error) {
 	if config.CheckHistory == true {
 		err := fmt.Sprintf("You are also not allowed to use any of your previous %d passwords.", config.MinHistory)
 		if password.NewPassword == password.OldPassword {
@@ -154,15 +154,15 @@ func CheckHistory(password *Password, config *PasswordRules, blackList []string)
 }
 
 // CheckBlackList function
-func CheckBlackList(password *Password, config *PasswordRules, blackList []string) (bool, error) {
+func CheckBlackList(password *Password, config *PasswordRules) (bool, error) {
 	if config.CheckBlackList == true {
 
-		if len(blackList) > 0 {
+		if len(config.BlackList) > 0 {
 			lowerPass := strings.ToLower(password.NewPassword)
-			for i := 0; i < len(blackList); i++ {
-				n := strings.Count(lowerPass, blackList[i])
+			for i := 0; i < len(config.BlackList); i++ {
+				n := strings.Count(lowerPass, config.BlackList[i])
 				if n > 0 {
-					err := fmt.Sprintf("Password contains black listed word '%s'.", blackList[i])
+					err := fmt.Sprintf("Password contains black listed word '%s'.", config.BlackList[i])
 					return false, errors.New(err)
 				}
 			}

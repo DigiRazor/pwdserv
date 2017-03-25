@@ -1,5 +1,7 @@
 package pwdserv
 
+import "encoding/json"
+
 // Password struct for password validation
 type Password struct {
 	JWTToken        string
@@ -28,4 +30,6 @@ type PasswordRules struct {
 	CheckHistory     bool
 	MinHistory       int
 	CheckBlackList   bool
+	BlackList        []string
+	CustomConfig     json.RawMessage
 }
