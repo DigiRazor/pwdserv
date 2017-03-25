@@ -1,4 +1,4 @@
-# Go-PwdServ
+# Go-PwdServ [![Build Status](https://travis-ci.org/DigiRazor/pwdserv.svg?branch=master)](https://travis-ci.org/DigiRazor/pwdserv)
 
 Go-PwdServ is a lightweight password verification service for [Go](https://golang.org/).
 
@@ -31,3 +31,4 @@ This service supports the use of build-in validators, to validate a new password
 ## Usage
 
 This is a quick introduction (Go-PwdServ, world; world, Go-PwdServ):
+
