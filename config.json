@@ -8,7 +8,7 @@
         "CheckLowercase": true,
         "CheckNumeric": true,
         "CheckSpecialChar": true,
-        "SpecialChar": "!@#$%*/+",
+        "SpecialChar": "!@#$%/+*",
         "CheckWhiteSpace": true,        
         "CheckHistory": true,
         "MinHistory": 12,

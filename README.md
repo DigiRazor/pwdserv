@@ -32,3 +32,57 @@ This service supports the use of build-in validators, to validate a new password
 
 This is a quick introduction (Go-PwdServ, world; world, Go-PwdServ):
 
+```go
+package main
+
+import (
+	"fmt"
+
+	"github.com/DigiRazor/pwdserv"
+)
+
+var blackList = []string{
+	"test",
+	"password",
+}
+
+var cfgData = []byte(`{
+			"CheckConfirm": true,
+			"CheckMinLength": true,
+			"MinLength": 8,
+			"CheckUserID": true,
+			"CheckUppercase": true,
+			"CheckLowercase": true,
+			"CheckNumeric": true,
+			"CheckSpecialChar": true,
+			"SpecialChar": "!@#$%*+/",
+			"CheckWhiteSpace": true,
+			"CheckHistory": true,
+			"MinHistory": 3,
+			"CheckBlackList": true
+		}`)
+
+func main() {
+
+	serv := pwdserv.New()
+	err := serv.SetConfig(cfgData, blackList)
+	if err != nil {
+		fmt.Printf("Setup Error: %s\n", err)
+	}
+
+	pwd := pwdserv.Password{
+		UserID:          "ABHW089",
+		OldPassword:     "B1ge@rs*",
+		NewPassword:     "yVHn6?R@",
+		ConfirmPassword: "yVHn6?R@",
+		PasswordHistory: []string{"$sG96r#X", "3g9m&9W7"},
+		NewPasswordHash: "yVHn6?R@",
+	}
+	err = serv.Validate(&pwd)
+	if err != nil {
+		fmt.Printf("Validate Error: %s\n", err)
+	} else {
+		fmt.Println("Success")
+	}
+}
+```

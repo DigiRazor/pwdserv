@@ -40,6 +40,7 @@ func (z *PasswordService) SetConfig(configData []byte, blackList []string) error
 	if err != nil {
 		return err
 	}
+
 	z.config = cfg
 	z.blackList = blackList
 
