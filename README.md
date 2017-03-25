@@ -86,3 +86,9 @@ func main() {
 	}
 }
 ```
+## Change log
+
+**Initial Version:** 
+- Basic validations as per basic feature list
+- Base unit tests
+- Allowing for custom validation
