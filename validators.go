@@ -18,7 +18,7 @@ func (n *validFunc) addFunc(name string, val Validation) {
 	n.validation = val
 }
 
-// ComfirmPassword function
+// ComfirmPassword validator checks the NewPassword against the ConfirmPassword.
 func ComfirmPassword(password *Password, config *PasswordRules) (bool, error) {
 	if config.CheckConfirm == true {
 		res := strings.TrimSpace(password.NewPassword) == strings.TrimSpace(password.ConfirmPassword)
@@ -30,7 +30,7 @@ func ComfirmPassword(password *Password, config *PasswordRules) (bool, error) {
 	return true, nil
 }
 
-// CheckLength function
+// CheckLength validator checks the NewPassword MinLength.
 func CheckLength(password *Password, config *PasswordRules) (bool, error) {
 	if config.CheckMinLength == true {
 		res := len(strings.TrimSpace(password.NewPassword)) >= config.MinLength
@@ -44,7 +44,7 @@ func CheckLength(password *Password, config *PasswordRules) (bool, error) {
 	return true, nil
 }
 
-// CheckUserID function
+// CheckUserID validator checks the NewPassword against the UserID.
 func CheckUserID(password *Password, config *PasswordRules) (bool, error) {
 	if config.CheckUserID == true {
 		lowerUID := strings.ToLower(password.UserID)
@@ -60,7 +60,7 @@ func CheckUserID(password *Password, config *PasswordRules) (bool, error) {
 	return true, nil
 }
 
-// CheckUppercase function
+// CheckUppercase validator checks the NewPassword for upper-case characters.
 func CheckUppercase(password *Password, config *PasswordRules) (bool, error) {
 	if config.CheckUppercase == true {
 		res, _ := regexp.MatchString("(.*[A-Z])", password.NewPassword)
@@ -73,7 +73,7 @@ func CheckUppercase(password *Password, config *PasswordRules) (bool, error) {
 	return true, nil
 }
 
-// CheckLowercase function
+// CheckLowercase validator checks the NewPassword for lower-case characters.
 func CheckLowercase(password *Password, config *PasswordRules) (bool, error) {
 	if config.CheckLowercase == true {
 		res, _ := regexp.MatchString("(.*[a-z])", password.NewPassword)
@@ -86,7 +86,7 @@ func CheckLowercase(password *Password, config *PasswordRules) (bool, error) {
 	return true, nil
 }
 
-// CheckNumeric function
+// CheckNumeric validator checks the NewPassword for numeric characters.
 func CheckNumeric(password *Password, config *PasswordRules) (bool, error) {
 	if config.CheckNumeric == true {
 		res, _ := regexp.MatchString("(.*[0-9])", password.NewPassword)
@@ -99,7 +99,7 @@ func CheckNumeric(password *Password, config *PasswordRules) (bool, error) {
 	return true, nil
 }
 
-// CheckSpecialChar function
+// CheckSpecialChar validator checks the NewPassword for special characters.
 func CheckSpecialChar(password *Password, config *PasswordRules) (bool, error) {
 	if config.CheckSpecialChar == true {
 		str := config.SpecialChar
@@ -117,7 +117,7 @@ func CheckSpecialChar(password *Password, config *PasswordRules) (bool, error) {
 	return true, nil
 }
 
-// CheckWhiteSpace function
+// CheckWhiteSpace validator checks the NewPassword for white space.
 func CheckWhiteSpace(password *Password, config *PasswordRules) (bool, error) {
 	if config.CheckWhiteSpace == true {
 		res, _ := regexp.MatchString("(.*[\\s])", password.NewPassword)
@@ -130,7 +130,7 @@ func CheckWhiteSpace(password *Password, config *PasswordRules) (bool, error) {
 	return true, nil
 }
 
-// CheckHistory function
+// CheckHistory validator checks the NewPasswordHash against the PasswordHistory
 func CheckHistory(password *Password, config *PasswordRules) (bool, error) {
 	if config.CheckHistory == true {
 		err := fmt.Sprintf("You are also not allowed to use any of your previous %d passwords.", config.MinHistory)
@@ -153,7 +153,7 @@ func CheckHistory(password *Password, config *PasswordRules) (bool, error) {
 	return true, nil
 }
 
-// CheckBlackList function
+// CheckBlackList validator checks the NewPassword against the BlackList
 func CheckBlackList(password *Password, config *PasswordRules) (bool, error) {
 	if config.CheckBlackList == true {
 
